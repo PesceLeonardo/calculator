@@ -1,3 +1,29 @@
+/* FONTS */
+
+@font-face {
+  font-family: digital;
+  src: url(./fonts/digital-7.ttf);
+}
+
+@font-face {
+  font-family: digitalMono;
+  src: url(./fonts/digital-7\ \(mono\).ttf);
+}
+
+@font-face {
+  font-family: digitalItalic;
+  src: url(./fonts/digital-7\ \(italic\).ttf);
+}
+
+@font-face {
+  font-family: digitalMonoItalic;
+  src: url(./fonts/digital-7\ \(mono\ italic\).ttf);
+}
+
+/*:======================================================================:*/
+
+
+
 * {
   margin: 0;
   padding: 0;
@@ -18,11 +44,13 @@
 
 .display {
   margin-bottom: 10px;
-  padding: 2px;
+  padding: 10px;
 
   width: 320px;
   height: 60px;
 
+  font-family: digitalMono;
+  font-size: 48px;
   text-align: right;
 
   border-radius: 10px;
