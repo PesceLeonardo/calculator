@@ -43,7 +43,10 @@ let overwriteDisplay = false;
 
 digitsNodeList.forEach(digitButton => digitButton.addEventListener("click", function(e) {
   const digit = e.target.textContent;
-  if (overwriteDisplay) calculatorDisplay.textContent = "";
+  if (overwriteDisplay) {
+    calculatorDisplay.textContent = "";
+    overwriteDisplay = false;
+  }
   if (calculatorDisplay.textContent === "0") calculatorDisplay.textContent = "";
   if (calculatorDisplay.textContent.length < 13) calculatorDisplay.textContent += digit;
 }));
