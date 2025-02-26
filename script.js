@@ -24,7 +24,8 @@ const AC_clearAllOperator = document.querySelector(".AC");
 
 const equalOperator = document.querySelector(".equal");
 
-const calculatorDisplay = document.querySelector(".display");
+const calculatorDisplay = document.querySelector(".number-text");
+const operatorDisplay = document.querySelector(".operator-text");
 
 
 
@@ -36,20 +37,26 @@ const elements = {
   secondOperand: "",
 };
 
-let display = "";
+let overwriteDisplay = false;
 
 // Enter Digits
 
 digitsNodeList.forEach(digitButton => digitButton.addEventListener("click", function(e) {
   const digit = e.target.textContent;
-  calculatorDisplay.textContent.length < 13 ? calculatorDisplay.textContent += digit : null;
+  if (overwriteDisplay) calculatorDisplay.textContent = "";
+  if (calculatorDisplay.textContent === "0") calculatorDisplay.textContent = "";
+  if (calculatorDisplay.textContent.length < 13) calculatorDisplay.textContent += digit;
 }));
 
 operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("click", function(e) {
   elements.firstOperand = calculatorDisplay.textContent;
   calculatorDisplay.textContent = 0;
 
-  switch (e.target.textContent) {
+  const operatorString = e.target.textContent;
+
+  operatorDisplay.textContent = operatorString;
+
+  switch (operatorString) {
     case "+":
       elements.operationFunction = add;
       break;
@@ -77,8 +84,31 @@ operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("cli
   }
 }));
 
+// Operations
+
 equalOperator.addEventListener("click", function() {
   elements.secondOperand = calculatorDisplay.textContent;
+
   const result = elements.operationFunction(elements.firstOperand, elements.secondOperand);
   calculatorDisplay.textContent = result;
+
+  operatorDisplay.textContent = "";
+
+  overwriteDisplay = true;
 });
+
+// C / AC
+
+C_clearOperator.addEventListener("click", function() {
+  calculatorDisplay.textContent = "0";
+});
+
+AC_clearAllOperator.addEventListener("click", function() {
+  calculatorDisplay.textContent = "0";
+  operatorDisplay.textContent = "";
+
+  elements.firstOperand = "";
+  elements.operationFunction = null;
+  elements.secondOperand = "";
+});
+
