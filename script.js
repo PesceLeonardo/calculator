@@ -20,6 +20,7 @@ const equalOperator = document.querySelector(".equal");
 
 const calculatorDisplay = document.querySelector(".number-text");
 const operatorDisplay = document.querySelector(".operator-text");
+const signDisplay = document.querySelector(".sign-text");
 
 
 
@@ -27,9 +28,11 @@ const operatorDisplay = document.querySelector(".operator-text");
 
 const MAX_LENGTH = 13;
 
+const returnSelf = (a, b) => b;
+
 const elements = {
   firstOperand: "",
-  operationFunction: null,
+  operationFunction: returnSelf,
   secondOperand: "",
 };
 
@@ -60,6 +63,9 @@ addDecimalOperator.addEventListener("click", function() {
   }
 });
 
+
+
+// TODO ========================================================================================= //
 
 // Choose Operation
 
@@ -115,6 +121,8 @@ equalOperator.addEventListener("click", function() {
   overwriteDisplay = true;
 });
 
+// ============================================================================================== //
+
 
 
 // C / AC
@@ -126,9 +134,10 @@ C_clearOperator.addEventListener("click", function() {
 AC_clearAllOperator.addEventListener("click", function() {
   calculatorDisplay.textContent = "0";
   operatorDisplay.textContent = "";
+  signDisplay.textContent = "";
 
   elements.firstOperand = "";
-  elements.operationFunction = null;
+  elements.operationFunction = returnSelf;
   elements.secondOperand = "";
 });
 
@@ -137,5 +146,10 @@ AC_clearAllOperator.addEventListener("click", function() {
 // Change Sign
 
 changeSignOperator.addEventListener("click", function() {
-  calculatorDisplay.textContent = changeSign(calculatorDisplay.textContent);
+  if (!signDisplay.textContent) signDisplay.textContent = "-";
+  else signDisplay.textContent = "";
 });
+
+function checkSign(num) {
+  if (signDisplay.textContent === "-") return changeSign(num);
+}
