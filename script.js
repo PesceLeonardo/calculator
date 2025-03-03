@@ -9,14 +9,6 @@ import {add, subtract, multiply, divide, integerDivide, modulusDivide, changeSig
 const digitsNodeList = document.querySelectorAll(".number");
 const operatorsNodeList = document.querySelectorAll(".operator");
 
-const plusOperator = document.querySelector(".addition");
-const minusOperator = document.querySelector(".subtraction");
-const multOperator = document.querySelector(".multiplication");
-const divisionOperator = document.querySelector(".division");
-
-const integerDivisionOperator = document.querySelector(".integer-division");
-const modulusOperator = document.querySelector(".modulus");
-
 const changeSignOperator = document.querySelector(".sign");
 
 const addDecimalOperator = document.querySelector(".dot");
