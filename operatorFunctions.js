@@ -1,13 +1,13 @@
 const MAX_LIMIT = 9999999999999;
-const MIN_LIMIT = 0.00000000001;
+const LEN_LIMIT = 13;
 
 function checkNumberMaximum(num, max=MAX_LIMIT) {
   if (Math.abs(num) > max) return true;
   return false;
 }
 
-function checkNumberMinimum(num, min=MIN_LIMIT) {
-  if (Math.abs(num) < MIN_LIMIT) return true;
+function checkNumberMinimum(num, min=LEN_LIMIT) {
+  if (String(num).length > min) return true;
   return false;
 }
 
@@ -31,35 +31,35 @@ export function subtract(a, b) {
 export function multiply(a, b) {
   const result = +a * +b;
   if (checkNumberMaximum(result)) return Infinity;
-  if (checkNumberMinimum(result)) return Math.round(result * 1e11) / 1e11;
+  if (checkNumberMinimum(result)) return +result.toFixed(11);
   return result;
 }
 
 export function divide(a, b) {
   const result = isZero(+b) ? "Error: division by 0" : +a / +b;
   if (checkNumberMaximum(result)) return Infinity;
-  if (checkNumberMinimum(result)) return Math.round(result * 1e11) / 1e11;
+  if (checkNumberMinimum(result)) return +result.toFixed(11);
   return result;
 }
 
 export function integerDivide(a, b) {
   const result = isZero(+b) ? "Error: division by 0" : Math.floor(+a / +b);
   if (checkNumberMaximum(result)) return Infinity;
-  if (checkNumberMinimum(result)) return Math.round(result * 1e11) / 1e11;
+  if (checkNumberMinimum(result)) return +result.toFixed();
   return result;
 }
 
 export function modulusDivide(a, b) {
   const result = isZero(+b) ? "Error: division by 0" : +a % +b;
   if (checkNumberMaximum(result)) return Infinity;
-  if (checkNumberMinimum(result)) return Math.round(result * 1e11) / 1e11;
+  if (checkNumberMinimum(result)) return +result.toFixed(11);
   return result;
 }
 
 export function changeSign(n) {
   const result = - +n;
   if (checkNumberMaximum(result)) return Infinity;
-  if (checkNumberMinimum(result)) return Math.round(result * 1e11) / 1e11;
+  if (checkNumberMinimum(result)) return +result.toFixed(11);
   return result;
 }
 

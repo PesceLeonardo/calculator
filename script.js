@@ -36,6 +36,7 @@ const elements = {
   secondOperand: "",
 };
 
+let operatorSelected = false;
 let overwriteDisplay = false;
 
 
@@ -44,12 +45,17 @@ let overwriteDisplay = false;
 
 digitsNodeList.forEach(digitButton => digitButton.addEventListener("click", function(e) {
   const digit = e.target.textContent;
+
   if (overwriteDisplay) {
     calculatorDisplay.textContent = "";
     overwriteDisplay = false;
   }
-  if (calculatorDisplay.textContent === "0") calculatorDisplay.textContent = "";
-  if (calculatorDisplay.textContent.length < MAX_LENGTH) calculatorDisplay.textContent += digit;
+
+  if (calculatorDisplay.textContent === "0")
+    calculatorDisplay.textContent = "";
+
+  if (calculatorDisplay.textContent.length < MAX_LENGTH)
+    calculatorDisplay.textContent += digit;
 }));
 
 
@@ -65,17 +71,14 @@ addDecimalOperator.addEventListener("click", function() {
 
 
 
-// TODO ========================================================================================= //
-
-// Choose Operation
-
 operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("click", function(e) {
-  if (elements.firstOperand === "") elements.firstOperand = calculatorDisplay.textContent;
-
-  calculatorDisplay.textContent = 0;
-
+  elements.firstOperand = checkSign(calculatorDisplay.textContent);
+  
   const operatorString = e.target.textContent;
   operatorDisplay.textContent = operatorString;
+  
+  overwriteDisplay = true;
+  operatorSelected = true;
 
   switch (operatorString) {
     case "+":
@@ -101,8 +104,9 @@ operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("cli
     case "//":
       elements.operationFunction = integerDivide;
       break;
-
   }
+
+  signDisplay.textContent = "";
 }));
 
 
@@ -110,18 +114,19 @@ operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("cli
 // Operations
 
 equalOperator.addEventListener("click", function() {
-  elements.secondOperand = calculatorDisplay.textContent;
+  if (!operatorSelected) {
+    elements.firstOperand = calculatorDisplay.textContent;
+  } else {
+    elements.secondOperand = calculatorDisplay.textContent;
+  }
 
-  let result = String(elements.operationFunction(elements.firstOperand, elements.secondOperand));
-  if (result.length > MAX_LENGTH) result = result.slice(0, MAX_LENGTH);
-  calculatorDisplay.textContent = result;
-
-  operatorDisplay.textContent = "";
+  const result = elements.operationFunction(elements.firstOperand, elements.secondOperand);
+  if (result < 0) changeSign();
+  calculatorDisplay.textContent = Math.abs(result);
 
   overwriteDisplay = true;
+  operatorSelected = false;
 });
-
-// ============================================================================================== //
 
 
 
@@ -145,10 +150,12 @@ AC_clearAllOperator.addEventListener("click", function() {
 
 // Change Sign
 
-changeSignOperator.addEventListener("click", function() {
+changeSignOperator.addEventListener("click", switchSign);
+
+function switchSign() {
   if (!signDisplay.textContent) signDisplay.textContent = "-";
   else signDisplay.textContent = "";
-});
+}
 
 function checkSign(num) {
   if (signDisplay.textContent === "-") return changeSign(num);
