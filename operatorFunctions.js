@@ -1,33 +1,53 @@
-export function add(a, b) {
-  return +a + +b;
-}
+const MAX_LIMIT = 9999999999999;
 
-export function subtract(a, b) {
-  return +a - +b;
+function checkNumberMaximum(num, max) {
+  if (Math.abs(num) > max) return true;
+  return false;
 }
-
-export function multiply(a, b) {
-  return +a * +b;
-}
-
-export function isZero(n) {
+function isZero(n) {
   if (n === 0) return true;
   return false;
 }
 
+export function add(a, b) {
+  const result = +a + +b;
+  if (checkNumberMaximum(result, MAX_LIMIT)) return Infinity;
+  return result;
+}
+
+export function subtract(a, b) {
+  const result = +a - +b;
+  if (checkNumberMaximum(result, MAX_LIMIT)) return Infinity;
+  return result;
+}
+
+export function multiply(a, b) {
+  const result = +a * +b;
+  if (checkNumberMaximum(result, MAX_LIMIT)) return Infinity;
+  return result;
+}
+
 export function divide(a, b) {
-  return isZero(+b) ? "Error: division by 0" : +a / +b;
+  const result = isZero(+b) ? "Error: division by 0" : +a / +b;
+  if (checkNumberMaximum(result, MAX_LIMIT)) return Infinity;
+  return result;
 }
 
 export function integerDivide(a, b) {
-  return isZero(+b) ? "Error: division by 0" : Math.floor(+a / +b);
+  const result = isZero(+b) ? "Error: division by 0" : Math.floor(+a / +b);
+  if (checkNumberMaximum(result, MAX_LIMIT)) return Infinity;
+  return result;
 }
 
 export function modulusDivide(a, b) {
-  return isZero(+b) ? "Error: division by 0" : +a % +b;
+  const result = isZero(+b) ? "Error: division by 0" : +a % +b;
+  if (checkNumberMaximum(result, MAX_LIMIT)) return Infinity;
+  return result;
 }
 
 export function changeSign(n) {
-  return - +n;
+  const result = - +n;
+  if (checkNumberMaximum(result, MAX_LIMIT)) return Infinity;
+  return result;
 }
 

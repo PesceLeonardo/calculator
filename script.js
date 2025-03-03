@@ -1,6 +1,8 @@
 // Operator Functions
 
-import {add, subtract, multiply, isZero, divide, integerDivide, modulusDivide, changeSign} from "./operatorFunctions.js"
+import {add, subtract, multiply, divide, integerDivide, modulusDivide, changeSign} from "./operatorFunctions.js"
+
+
 
 // DOM Elements
 
@@ -31,6 +33,8 @@ const operatorDisplay = document.querySelector(".operator-text");
 
 // Global Variables
 
+const MAX_LENGTH = 13;
+
 const elements = {
   firstOperand: "",
   operationFunction: null,
@@ -38,6 +42,8 @@ const elements = {
 };
 
 let overwriteDisplay = false;
+
+
 
 // Enter Digits
 
@@ -48,15 +54,29 @@ digitsNodeList.forEach(digitButton => digitButton.addEventListener("click", func
     overwriteDisplay = false;
   }
   if (calculatorDisplay.textContent === "0") calculatorDisplay.textContent = "";
-  if (calculatorDisplay.textContent.length < 13) calculatorDisplay.textContent += digit;
+  if (calculatorDisplay.textContent.length < MAX_LENGTH) calculatorDisplay.textContent += digit;
 }));
 
+
+
+// Decimal
+
+addDecimalOperator.addEventListener("click", function() {
+  if (!calculatorDisplay.textContent.includes(".")) {
+    if (overwriteDisplay) calculatorDisplay.textContent = "0";
+    calculatorDisplay.textContent += ".";
+  }
+});
+
+
+// Choose Operation
+
 operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("click", function(e) {
-  elements.firstOperand = calculatorDisplay.textContent;
+  if (elements.firstOperand === "") elements.firstOperand = calculatorDisplay.textContent;
+
   calculatorDisplay.textContent = 0;
 
   const operatorString = e.target.textContent;
-
   operatorDisplay.textContent = operatorString;
 
   switch (operatorString) {
@@ -87,18 +107,23 @@ operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("cli
   }
 }));
 
+
+
 // Operations
 
 equalOperator.addEventListener("click", function() {
   elements.secondOperand = calculatorDisplay.textContent;
 
-  const result = elements.operationFunction(elements.firstOperand, elements.secondOperand);
+  let result = String(elements.operationFunction(elements.firstOperand, elements.secondOperand));
+  if (result.length > MAX_LENGTH) result = result.slice(0, MAX_LENGTH);
   calculatorDisplay.textContent = result;
 
   operatorDisplay.textContent = "";
 
   overwriteDisplay = true;
 });
+
+
 
 // C / AC
 
@@ -115,3 +140,10 @@ AC_clearAllOperator.addEventListener("click", function() {
   elements.secondOperand = "";
 });
 
+
+
+// Change Sign
+
+changeSignOperator.addEventListener("click", function() {
+  calculatorDisplay.textContent = changeSign(calculatorDisplay.textContent);
+});
