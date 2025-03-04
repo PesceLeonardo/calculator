@@ -71,6 +71,8 @@ addDecimalOperator.addEventListener("click", function() {
 
 
 
+// Operators
+
 operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("click", function(e) {
   elements.firstOperand = checkSign(calculatorDisplay.textContent);
   
@@ -111,17 +113,17 @@ operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("cli
 
 
 
-// Operations
+// Equal Operator
 
 equalOperator.addEventListener("click", function() {
   if (!operatorSelected) {
-    elements.firstOperand = calculatorDisplay.textContent;
+    elements.firstOperand = checkSign(calculatorDisplay.textContent);
   } else {
-    elements.secondOperand = calculatorDisplay.textContent;
+    elements.secondOperand = checkSign(calculatorDisplay.textContent);
   }
 
   const result = elements.operationFunction(elements.firstOperand, elements.secondOperand);
-  if (result < 0) changeSign();
+  if (result < 0) switchSign();
   calculatorDisplay.textContent = Math.abs(result);
 
   overwriteDisplay = true;
@@ -159,4 +161,5 @@ function switchSign() {
 
 function checkSign(num) {
   if (signDisplay.textContent === "-") return changeSign(num);
+  return num;
 }

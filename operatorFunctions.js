@@ -36,21 +36,21 @@ export function multiply(a, b) {
 }
 
 export function divide(a, b) {
-  const result = isZero(+b) ? "Error: division by 0" : +a / +b;
+  const result = isZero(+b) ? "Error" : +a / +b;
   if (checkNumberMaximum(result)) return Infinity;
   if (checkNumberMinimum(result)) return +result.toFixed(11);
   return result;
 }
 
 export function integerDivide(a, b) {
-  const result = isZero(+b) ? "Error: division by 0" : Math.floor(+a / +b);
+  const result = isZero(+b) ? "Error" : Math.floor(+a / +b);
   if (checkNumberMaximum(result)) return Infinity;
   if (checkNumberMinimum(result)) return +result.toFixed();
   return result;
 }
 
 export function modulusDivide(a, b) {
-  const result = isZero(+b) ? "Error: division by 0" : +a % +b;
+  const result = isZero(+b) ? "Error" : +a % +b;
   if (checkNumberMaximum(result)) return Infinity;
   if (checkNumberMinimum(result)) return +result.toFixed(11);
   return result;
@@ -58,8 +58,6 @@ export function modulusDivide(a, b) {
 
 export function changeSign(n) {
   const result = - +n;
-  if (checkNumberMaximum(result)) return Infinity;
-  if (checkNumberMinimum(result)) return +result.toFixed(11);
   return result;
 }
 
