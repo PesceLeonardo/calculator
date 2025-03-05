@@ -223,6 +223,12 @@ document.addEventListener("keydown", function(e) {
       case ".":     addDecimalOperator.click();   break;
       case "c":     C_clearOperator.click();      break;
       case "C":     AC_clearAllOperator.click();  break;
+
+      case "Backspace":
+        calculatorDisplay.textContent = calculatorDisplay.textContent.slice(0, -1);
+        if (calculatorDisplay.textContent === "")
+          calculatorDisplay.textContent = "0";
+        break;
     }
   }
 });
