@@ -218,6 +218,7 @@ function checkSign(num) {
 // Keyboard Support
 
 document.addEventListener("keydown", function(e) {
+  console.log(e.key);
   if (digits.includes(e.key)) {
     const digit = e.key;
     enterDigits(digit);
@@ -226,7 +227,7 @@ document.addEventListener("keydown", function(e) {
     slashCounter++;
 
     if (slashCounter === 1) {
-      setTimeout(() => {
+      slashTimer = setTimeout(() => {
         slashCounter = 0;
       }, 300);
       divisionOperator.click();
