@@ -15,6 +15,7 @@ const addDecimalOperator = document.querySelector(".dot");
 
 const C_clearOperator = document.querySelector(".C");
 const AC_clearAllOperator = document.querySelector(".AC");
+const backspaceOperator = document.querySelector(".backspace");
 
 const equalOperator = document.querySelector(".equal");
 
@@ -163,11 +164,11 @@ equalOperator.addEventListener("click", function() {
 
 // C / AC
 
-C_clearOperator.addEventListener("click", function() {
+function clear() {
   calculatorDisplay.textContent = "0";
-});
+}
 
-AC_clearAllOperator.addEventListener("click", function() {
+function clearAll() {
   calculatorDisplay.textContent = "0";
   operatorDisplay.textContent = "";
   signDisplay.textContent = "";
@@ -178,7 +179,23 @@ AC_clearAllOperator.addEventListener("click", function() {
 
   operatorSelected = false;
   secondOperandSelected = false;
-});
+}
+
+C_clearOperator.addEventListener("click", clear);
+
+AC_clearAllOperator.addEventListener("click", clearAll);
+
+
+
+// Backspace
+
+function backspace() {
+  calculatorDisplay.textContent = calculatorDisplay.textContent.slice(0, -1);
+  if (calculatorDisplay.textContent === "")
+    calculatorDisplay.textContent = "0";
+}
+
+backspaceOperator.addEventListener("click", backspace);
 
 
 
@@ -220,21 +237,17 @@ document.addEventListener("keydown", function(e) {
     }
   } else {
     switch (e.key) {
-      case "s":     switchSign();                 break;
-      case "+":     plusOperator.click();         break;
-      case "-":     minusOperator.click();        break;
-      case "*":     multOperator.click();         break;
-      case "%":     modOperator.click();          break;
-      case "Enter": equalOperator.click();        break;
-      case ".":     addDecimalOperator.click();   break;
-      case "c":     C_clearOperator.click();      break;
-      case "C":     AC_clearAllOperator.click();  break;
+      case "+":         plusOperator.click();         break;
+      case "-":         minusOperator.click();        break;
+      case "*":         multOperator.click();         break;
+      case "%":         modOperator.click();          break;
+      case "Enter":     equalOperator.click();        break;
+      case ".":         addDecimalOperator.click();   break;
 
-      case "Backspace":
-        calculatorDisplay.textContent = calculatorDisplay.textContent.slice(0, -1);
-        if (calculatorDisplay.textContent === "")
-          calculatorDisplay.textContent = "0";
-        break;
+      case "s":         switchSign();                 break;
+      case "c":         clear();                      break;
+      case "C":         clearAll();                   break;
+      case "Backspace": backspace();                  break;
     }
   }
 });
