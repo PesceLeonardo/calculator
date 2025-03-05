@@ -38,7 +38,7 @@ const elements = {
 
 let operatorSelected = false;
 let overwriteDisplay = false;
-
+let secondOperandSelected = false;
 
 
 // Enter Digits
@@ -56,6 +56,8 @@ digitsNodeList.forEach(digitButton => digitButton.addEventListener("click", func
 
   if (calculatorDisplay.textContent.length < MAX_LENGTH)
     calculatorDisplay.textContent += digit;
+
+  if (operatorSelected) secondOperandSelected = true;
 }));
 
 
@@ -74,13 +76,16 @@ addDecimalOperator.addEventListener("click", function() {
 // Operators
 
 operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("click", function(e) {
-  elements.firstOperand = checkSign(calculatorDisplay.textContent);
-  
+  if (!operatorSelected) {
+    elements.firstOperand = checkSign(calculatorDisplay.textContent);
+  }
+
   const operatorString = e.target.textContent;
   operatorDisplay.textContent = operatorString;
   
   overwriteDisplay = true;
   operatorSelected = true;
+  secondOperandSelected = false;
 
   switch (operatorString) {
     case "+":
@@ -99,15 +104,16 @@ operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("cli
       elements.operationFunction = divide;
       break;
 
-    case "%":
-      elements.operationFunction = modulusDivide;
-      break;
+      case "%":
+        elements.operationFunction = modulusDivide;
+        break;
 
     case "//":
       elements.operationFunction = integerDivide;
       break;
   }
 
+  calculatorDisplay.textContent = "0";
   signDisplay.textContent = "";
 }));
 
@@ -116,18 +122,23 @@ operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("cli
 // Equal Operator
 
 equalOperator.addEventListener("click", function() {
-  if (!operatorSelected) {
-    elements.firstOperand = checkSign(calculatorDisplay.textContent);
-  } else {
-    elements.secondOperand = checkSign(calculatorDisplay.textContent);
+  if (secondOperandSelected) {
+    if (!operatorSelected) {
+      elements.firstOperand = checkSign(calculatorDisplay.textContent);
+    } else {
+      elements.secondOperand = checkSign(calculatorDisplay.textContent);
+    }
+
+    const result = elements.operationFunction(elements.firstOperand, elements.secondOperand);
+    if (result < 0) signDisplay.textContent = "neg";
+    else signDisplay.textContent = "";
+    calculatorDisplay.textContent = Math.abs(result);
+
+    operatorDisplay.textContent = " ";
+
+    overwriteDisplay = true;
+    operatorSelected = false;
   }
-
-  const result = elements.operationFunction(elements.firstOperand, elements.secondOperand);
-  if (result < 0) switchSign();
-  calculatorDisplay.textContent = Math.abs(result);
-
-  overwriteDisplay = true;
-  operatorSelected = false;
 });
 
 
@@ -155,11 +166,11 @@ AC_clearAllOperator.addEventListener("click", function() {
 changeSignOperator.addEventListener("click", switchSign);
 
 function switchSign() {
-  if (!signDisplay.textContent) signDisplay.textContent = "-";
+  if (!signDisplay.textContent) signDisplay.textContent = "neg";
   else signDisplay.textContent = "";
 }
 
 function checkSign(num) {
-  if (signDisplay.textContent === "-") return changeSign(num);
+  if (signDisplay.textContent === "neg") return changeSign(num);
   return num;
 }
