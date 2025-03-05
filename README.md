@@ -15,20 +15,21 @@ To perform an operation:
 You may click on the equal sign after computing an operation to continue
 to compute that same operation (e.g. repeatedly compute "-1").
 
-### Keyboard Inputs
-
-Any Digit
-+             Plus
--             Minus
-*             Times
-/             Divided by
-//            Divided by (floor division)
-%             Remainder (modulus)
-Enter         Equal to
-s             Toggle sign (+ <-> -)
-c             Clear display
-C             Clear all
-Backspace     Delete last typed digit
+## **Keyboard Shortcuts**
+| Key         | Action                     |
+|-------------|----------------------------|
+| `0-9`       | Enter digits               |
+| `+`         | Addition                   |
+| `-`         | Subtraction                |
+| `*`         | Multiplication             |
+| `/`         | Division                   |
+| `//`        | Floor Division (Integer)   |
+| `%`         | Modulus (Remainder)        |
+| `Enter`     | Compute result (`=`)       |
+| `s`         | Toggle sign (`+ ↔ -`)      |
+| `c`         | Clear display              |
+| `C`         | Clear all                  |
+| `Backspace` | Delete last digit          |
 
 Enjoy!
 
