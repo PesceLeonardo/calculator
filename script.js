@@ -91,13 +91,17 @@ addDecimalOperator.addEventListener("click", function() {
 // Operators
 
 operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("click", function(e) {
+  if (secondOperandSelected) {
+    equalOperator.click();
+  }
+  
   if (!operatorSelected) {
     elements.firstOperand = checkSign(calculatorDisplay.textContent);
   }
 
   const operatorString = e.target.textContent;
   operatorDisplay.textContent = operatorString;
-  
+
   overwriteDisplay = true;
   operatorSelected = true;
   secondOperandSelected = false;
@@ -128,7 +132,6 @@ operatorsNodeList.forEach(operatorButton => operatorButton.addEventListener("cli
       break;
   }
 
-  calculatorDisplay.textContent = "0";
   signDisplay.textContent = "";
 }));
 
@@ -172,6 +175,9 @@ AC_clearAllOperator.addEventListener("click", function() {
   elements.firstOperand = "";
   elements.operationFunction = returnSelf;
   elements.secondOperand = "";
+
+  operatorSelected = false;
+  secondOperandSelected = false;
 });
 
 
