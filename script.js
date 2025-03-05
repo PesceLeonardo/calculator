@@ -22,6 +22,13 @@ const calculatorDisplay = document.querySelector(".number-text");
 const operatorDisplay = document.querySelector(".operator-text");
 const signDisplay = document.querySelector(".sign-text");
 
+const plusOperator = document.querySelector(".addition");
+const minusOperator = document.querySelector(".subtraction");
+const multOperator = document.querySelector(".multiplication");
+const divisionOperator = document.querySelector(".division");
+const intDivOperator = document.querySelector(".integer-division");
+const modOperator = document.querySelector(".modulus");
+
 
 
 // Global Variables
@@ -36,6 +43,11 @@ const elements = {
   secondOperand: "",
 };
 
+const digits = "0123456789";
+
+let slashCounter = 0;
+let slashTimer;
+
 let operatorSelected = false;
 let overwriteDisplay = false;
 let secondOperandSelected = false;
@@ -43,9 +55,7 @@ let secondOperandSelected = false;
 
 // Enter Digits
 
-digitsNodeList.forEach(digitButton => digitButton.addEventListener("click", function(e) {
-  const digit = e.target.textContent;
-
+function enterDigits(digit) {
   if (overwriteDisplay) {
     calculatorDisplay.textContent = "";
     overwriteDisplay = false;
@@ -58,6 +68,11 @@ digitsNodeList.forEach(digitButton => digitButton.addEventListener("click", func
     calculatorDisplay.textContent += digit;
 
   if (operatorSelected) secondOperandSelected = true;
+}
+
+digitsNodeList.forEach(digitButton => digitButton.addEventListener("click", function(e) {
+  const digit = e.target.textContent;
+  enterDigits(digit);
 }));
 
 
@@ -174,3 +189,41 @@ function checkSign(num) {
   if (signDisplay.textContent === "neg") return changeSign(num);
   return num;
 }
+
+
+
+// Keyboard Support
+
+document.addEventListener("keydown", function(e) {
+  if (digits.includes(e.key)) {
+    const digit = e.key;
+    enterDigits(digit);
+
+  } else if (e.key === "/") {
+    slashCounter++;
+
+    if (slashCounter === 1) {
+      setTimeout(() => {
+        slashCounter = 0;
+      }, 300);
+      divisionOperator.click();
+
+    } else if (slashCounter >= 2) {
+      slashCounter = 0;
+      intDivOperator.click();
+    }
+  } else {
+    switch (e.key) {
+      case "s":     switchSign();                 break;
+      case "+":     plusOperator.click();         break;
+      case "-":     minusOperator.click();        break;
+      case "*":     multOperator.click();         break;
+      case "%":     modOperator.click();          break;
+      case "Enter": equalOperator.click();        break;
+      case ".":     addDecimalOperator.click();   break;
+      case "c":     C_clearOperator.click();      break;
+      case "C":     AC_clearAllOperator.click();  break;
+    }
+  }
+});
+
